@@ -1,14 +1,39 @@
-This project was bootstrapped using Node.js + TypeScript + Express
 
-The task description can be found online at: https://powerxai.notion.site/Software-Engineer-c2d8095970d94e78a39f1abd86533939
 
-## Getting Started
+---
 
-In the project directory, you can run:
+# METRICS SERVICE
 
-### `npm run serve`
+A Node.js server to generate and ingest new data and return metrics based on specified start and end dates using [Express ](http://expressjs.com/).
 
-Runs the app in the development mode at [http://localhost:3000](http://localhost:3000).
+## Running Locally
 
-The server will reload if you make edits.<br />
-You will also see any lint or type errors in the console.
+Make sure you have [Node.js](http://nodejs.org/) installed.
+
+```bash
+npm install
+npm start
+```
+
+Your app should now be running on [localhost:3000](http://localhost:3000/).
+
+You can view the api docs via the endpoint http://localhost:3000/api-docs
+
+
+
+## Running with Docker
+Make sure you have [Docker](https://www.docker.com/) and [Docker-Compose](https://docs.docker.com/compose/) installed.
+Docker version 20.10.10 or higher
+
+```bash
+docker compose up
+```
+
+Your app should now be running on [localhost:3000](http://localhost:3000/).
+
+You can view the api docs via the endpoint http://localhost:3000/api-docs
+
+## Testing
+```bash
+npm run test
+```
