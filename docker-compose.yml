@@ -1,0 +1,16 @@
+version: "3"
+services:
+       powerx-metrics-service:
+           container_name: powerx-metrics-service
+           image: latest/powerx-metrics-service
+           ports:
+            - "3000:3000"
+           environment: 
+              NODE_ENV: development
+              BASE_URL: http://localhost
+              PORT: 3000
+              API_VERSION: v1
+
+           restart: always
+           build: .
+          

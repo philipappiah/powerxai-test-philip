@@ -1,0 +1,7 @@
+# variables:
+#   run_tests: "true"
+
+# stages:
+#   - build
+#   - dockerize
+#   - deploy

@@ -3,9 +3,17 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "dist",
+    "rootDir": "./src", 
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": [
+    "src/index.ts"
+  ],
+  "exclude": [
+    "./node_modules/"
+  ]
 }

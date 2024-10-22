@@ -1,33 +1,42 @@
-import express, { Express } from 'express';
-import helmet from 'helmet';
+
 import dotenv from 'dotenv';
-import { addReading, getReading } from './database';
+import app from "./app";
+var cluster = require('cluster');
+
+
+
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-const app: Express = express();
 
-app.use(helmet());
-app.use(express.text());
-app.use(express.urlencoded({ extended: true }));
 
-app.post('/data', async (req, res) => {
-  // TODO: parse incoming data, and save it to the database
-  // data is of the form:
-  //  {timestamp} {name} {value}
 
-  // addReading(...)
 
-  return res.json({ success: false });
-});
 
-app.get('/data', async (req, res) => {
-  // TODO: check what dates have been requested, and retrieve all data within the given range
+if (cluster.isMaster) {
 
-  // getReading(...)
+  // Count the machine's CPUs
+  var cpuCount = require('os').cpus().length;
 
-  return res.json({ success: false });
-});
+  // Create a worker for each CPU
+  for (var i = 0; i < cpuCount; i += 1) {
+      cluster.fork();
+  }
 
-app.listen(PORT, () => console.log(`Running on port ${PORT} ⚡`));
+  // Listen for terminating workers
+  cluster.on('exit', function (worker:any) {
+
+      // Replace the terminated workers
+      console.log('Worker ' + worker.id + ' died ');
+      cluster.fork();
+
+  });
+
+
+}else{
+
+  app.listen(PORT, () => console.log(`Running on port ${PORT} ⚡`));
+}
+
+
