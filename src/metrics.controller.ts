@@ -11,7 +11,7 @@ class MetricsController {
    
     const readings = req.body.trim().split("\n")
   
-
+    // validate input
     for (let i = 0; i < readings.length; i++){
       let values = readings[i].split(" ")
       
@@ -26,7 +26,7 @@ class MetricsController {
 
 
 
-    
+    // convert input to appropriate format and save
     readings.forEach((element:string) => {
 
       let values = element.split(" ")
@@ -66,6 +66,7 @@ class MetricsController {
         return res.json({ success: false, message: "from date cannot be greater than to date" });
       }
 
+      // query data based on specified from and to date
       while (fromDate <= toDate) {
         let dayReadingList: Array<Reading> = []
         dayReadingList = getReadingsByDate(fromDate.toISOString().substring(0, 10))
@@ -84,7 +85,7 @@ class MetricsController {
 
   })
 
-
+  // calculate power for the day using AVG(Current) * AVG(Voltage)
   calculatePower = (dayReadingList: Array<Reading>, date: string): Reading => {
 
     let dayCurrent = dayReadingList.filter(dr => dr.name === "Current")

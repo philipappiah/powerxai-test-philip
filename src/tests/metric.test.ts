@@ -70,7 +70,6 @@ describe('/ADD metrics', () => {
                 chai.request(SERVER_URL)
                 .get('/data?from=2022-04-14&to=2022-04-15')
                 .end((err:any, res:any) => {
-                    console.log(res)
                     res.body.should.be.a('array');
                     res.body.length.should.be.gt(0);
                     
