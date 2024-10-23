@@ -1,7 +1,5 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let should = chai.should();
-import {database} from "../database"
 
 chai.use(chaiHttp);
 

@@ -3,19 +3,23 @@ import express,{Express,Response, Request} from 'express'
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import MetricsController from './metrics.controller';
-var cluster = require('cluster');
-
+import {swaggerDocs} from './swaggerdocs'
+import swaggerUI from 'swagger-ui-express'
+import swaggerJsdoc  from "swagger-jsdoc"
 
 
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+
 const app: Express = express();
+
+const specs = swaggerJsdoc(swaggerDocs);
 
 app.use(helmet());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
 
 const metricsController = new MetricsController()
 

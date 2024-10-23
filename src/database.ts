@@ -4,14 +4,17 @@
 
 import { Reading } from "./types.dt";
 
-// Feel free to change the data structure to anything else you would like
-export const database: Record<string, Reading> = {};
+const readings : Record<string, Reading> = {};
+const database: Record<string, Record<string,Reading>> = {};
+
 
 /**
  * Store a reading in the database using the given key
  */
-export const addReading = (key: string, reading: Reading): Reading => {
-  database[key] = reading;
+export const addReading = (day: string,time:string, reading: Reading): Reading => {
+  readings[time] = reading
+  database[day] = readings;
+
   return reading;
 };
 
@@ -20,17 +23,15 @@ export const addReading = (key: string, reading: Reading): Reading => {
 /**
  * Retrieve a reading from the database using the given key
  */
-export const getReading = (key: string): Reading | undefined => {
+export const getReading = (key: string):  Record<string,Reading> => {
   return database[key];
 };
 
 
-
-/**
- * Find readings for specific date from the database using the given date
- */
-export const getReadingsByDate = (date:string): Array<Reading>  => {
-  return Object.keys(database).map(key => database[key]).filter(reading =>
-    reading.time.toISOString().substring(0,10) === date)
+export const getReadingsByIndexedDate = (date:string): Array<Reading>   => {
+  if(database[date]){
+  return Object.keys(database[date]).map(key => database[date][key])
+  }
+  return []
 };
 

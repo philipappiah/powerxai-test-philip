@@ -5,6 +5,7 @@ export interface Reading {
     // TODO: change this to contain whatever information is needed
   }
 
+  
   export interface CreateReading {
     time: number;
     name:string;

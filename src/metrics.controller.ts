@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid';
-import { addReading, getReadingsByDate } from './database';
+import { addReading, getReading, getReadingsByIndexedDate } from './database';
 import { CatchExpressError } from './errorHandler';
 import {  Reading } from './types.dt';
 
@@ -31,15 +31,17 @@ class MetricsController {
 
       let values = element.split(" ")
      
-        const dateTime = new Date(Number(values[0]) * 1000)
+        const time = (Number(values[0]) * 1000)+values[1]
+        const date = (new Date(Number(values[0]) * 1000).toISOString().slice(0,10))
         let reading : Reading = {
-          time: dateTime,
+          time: new Date(Number(values[0]) * 1000),
           name: values[1],
           value: Number(values[2])
          
         }
-
-        addReading(uuidv4(), reading)
+      
+        addReading(date, time,reading)
+     
     
     });
   
@@ -69,7 +71,7 @@ class MetricsController {
       // query data based on specified from and to date
       while (fromDate <= toDate) {
         let dayReadingList: Array<Reading> = []
-        dayReadingList = getReadingsByDate(fromDate.toISOString().substring(0, 10))
+        dayReadingList = getReadingsByIndexedDate(fromDate.toISOString().substring(0, 10))
 
         if (dayReadingList.length) {
 
@@ -78,7 +80,6 @@ class MetricsController {
 
         fromDate.setDate(fromDate.getDate() + 1)
       }
-
 
       return res.json(readingList);
 
